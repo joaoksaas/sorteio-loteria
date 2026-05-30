@@ -1,43 +1,24 @@
 import random
 from utils import limpar_tela, pedir_inteiro
 
-def megasena():
+# Dicionário para armazenar as modalidades de loteria
+MODALIDADES = {
+    "1": {"nome": "Megasena", "qtd": 6, "limite": 60},
+    "2": {"nome": "Lotofácil", "qtd": 15, "limite": 25},
+    "3": {"nome": "Quina", "qtd": 5, "limite": 80},
+}
+
+
+def realizar_sorteio(nome, maior, qte_num):
     limpar_tela()
 
-    # Retorna uma lista de 6 números únicos entre 1 e 60
-    sorteio = random.sample(range(1, 61), 6)
+    # Retorna uma lista de tamanho e limites de acordo com a opção escolhida
+    sorteio = random.sample(range(1, maior+1), qte_num)
     sorteio.sort()
-    print("\nOs números sorteados da Megasena são:", sorteio)
+    print(f"\nOs números sorteados da {nome} foram: {sorteio}")
     print("\n********************************************************************")
     input("\nPressione Enter para voltar ao menu...")
     limpar_tela()
-
-def lotofacil():
-    limpar_tela()
-    
-    # Retorna uma lista de 15 números únicos entre 1 e 25
-    sorteio = random.sample(range(1, 26), 15)
-
-    # Ordena os números para uma melhor visualização
-    sorteio.sort()
-    print("\nOs números sorteados da Lotofácil são:", sorteio)
-    print("\n********************************************************************")
-    input("\nPressione Enter para voltar ao menu...")
-    limpar_tela()
-
-
-def quina():
-    limpar_tela()
-    
-    # Retorna uma lista de 5 números únicos entre 1 e 80
-    sorteio = random.sample(range(1, 81), 5)
-    sorteio.sort()
-    print("\nOs números sorteados da Quina são:", sorteio)
-    print("\n********************************************************************")
-    input("\nPressione Enter para voltar ao menu...")
-    limpar_tela()
-
-
 
 
 def person():
@@ -77,7 +58,7 @@ def person():
 
         sorteio.sort()
 
-        print("\nOs números sorteados são: ", sorteio)
+        print("\nOs números sorteados foram: ", sorteio)
         print("\n********************************************************************")
         input("\nPressione Enter para voltar ao menu...")
         limpar_tela()
@@ -106,24 +87,20 @@ def main():
         # Verificação da escolha do usuáro
         if not opcao.isdigit() or int(opcao) not in [1, 2, 3, 4, 0]:
             print("\nOpção inválida. Por favor, escolha 1, 2, 3 ou 4.")
+
+        elif opcao == '0':
+            print("\nSaindo do programa... Obrigado e boa sorte!")
+            break
+
+        elif opcao in MODALIDADES:
+            cfg = MODALIDADES[opcao]
+            realizar_sorteio(cfg["nome"], cfg["limite"], cfg["qtd"])
+
+        elif opcao == '4':
+            person()
+
         else:
-            opcao = int(opcao)
-            if opcao == 1:
-                megasena()
-
-            elif opcao == 2:
-                lotofacil()
-
-            elif opcao == 3:
-                quina()
-
-            elif opcao == 4:
-                person()
-
-            else:
-                print("\nSaindo do programa... Obrigado e boa sorte!")
-                break
-
+            print("\nOpção inválida. Por favor, escolha 1, 2, 3 ou 4.")
 
 if __name__ == "__main__":
     main()
